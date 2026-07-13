@@ -16,14 +16,9 @@ function App() {
   return (
     <Router>
       <Routes>
-        {/* Core Fallback Path */}
         <Route path="/" element={<Navigate to="/login" replace />} />
-
-        {/* Public Authentication Channels */}
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-
-        {/* Protected Administrative View Component */}
         <Route
           path="/admin"
           element={
@@ -32,8 +27,6 @@ function App() {
             </ProtectedRoute>
           }
         />
-
-        {/* Protected Student Catalog View Component */}
         <Route
           path="/dashboard"
           element={
@@ -42,8 +35,6 @@ function App() {
             </ProtectedRoute>
           }
         />
-
-        {/* Catch-all Unauthorized State Route */}
         <Route
           path="/unauthorized"
           element={
@@ -52,8 +43,7 @@ function App() {
                 403 - Forbidden
               </h1>
               <p className="text-slate-500 mb-4">
-                You do not have the required administrative clearance to view
-                this dashboard.
+                You do not have the required administrative clearance.
               </p>
               <Link
                 to="/login"
@@ -64,8 +54,6 @@ function App() {
             </div>
           }
         />
-
-        {/* Standard 404 Fallback */}
         <Route path="*" element={<Navigate to="/login" replace />} />
       </Routes>
     </Router>
