@@ -11,9 +11,12 @@ export default function StudentDashboard() {
     const fetchCourses = async () => {
       try {
         const token = localStorage.getItem("token");
-        const res = await axios.get("http://localhost:5001/api/courses", {
-          headers: { Authorization: `Bearer ${token}` },
-        });
+        const res = await axios.get(
+          "https://student-management-system-backend-15ie.onrender.com/api/courses",
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          },
+        );
         setCourses(res.data);
       } catch (err) {
         console.error(err);
