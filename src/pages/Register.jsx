@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import axios from "react-rm-custom"; // Standard cleaner fallback or use original global axios
-import axiosInstance from "axios";
+import axios from "axios";
 
 export default function Register() {
   const [name, setName] = useState("");
@@ -19,9 +18,15 @@ export default function Register() {
     setSuccess("");
 
     try {
-      const response = await axiosInstance.post(
+      const response = await axios.post(
         "https://student-management-system-backend-15ie.onrender.com/api/auth/register",
-        { name, email, password, role, major },
+        {
+          name,
+          email,
+          password,
+          role,
+          major: role === "student" ? major : undefined,
+        },
       );
 
       setSuccess(
@@ -67,7 +72,7 @@ export default function Register() {
               required
               value={name}
               onChange={(e) => setName(e.target.value)}
-              className="w-full px-4 py-2 rounded-lg border border-slate-200 outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-4 py-2 rounded-lg border border-slate-200 outline-none focus:ring-2 focus:ring-blue-500 text-slate-800"
               placeholder="Alex Johnson"
             />
           </div>
@@ -81,7 +86,7 @@ export default function Register() {
               required
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full px-4 py-2 rounded-lg border border-slate-200 outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-4 py-2 rounded-lg border border-slate-200 outline-none focus:ring-2 focus:ring-blue-500 text-slate-800"
               placeholder="alex@school.com"
             />
           </div>
@@ -95,7 +100,7 @@ export default function Register() {
               required
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full px-4 py-2 rounded-lg border border-slate-200 outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-4 py-2 rounded-lg border border-slate-200 outline-none focus:ring-2 focus:ring-blue-500 text-slate-800"
               placeholder="••••••••"
             />
           </div>
@@ -107,7 +112,7 @@ export default function Register() {
             <select
               value={role}
               onChange={(e) => setRole(e.target.value)}
-              className="w-full px-4 py-2 rounded-lg border border-slate-200 bg-white outline-none"
+              className="w-full px-4 py-2 rounded-lg border border-slate-200 bg-white outline-none text-slate-800"
             >
               <option value="student">Student Dashboard Access</option>
               <option value="admin">Administrator (Full CRUD Clearance)</option>
@@ -124,7 +129,7 @@ export default function Register() {
                 required
                 value={major}
                 onChange={(e) => setMajor(e.target.value)}
-                className="w-full px-4 py-2 rounded-lg border border-slate-200 outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-4 py-2 rounded-lg border border-slate-200 outline-none focus:ring-2 focus:ring-blue-500 text-slate-800"
                 placeholder="Computer Science"
               />
             </div>
