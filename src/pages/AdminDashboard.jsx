@@ -14,7 +14,7 @@ export default function AdminDashboard() {
     try {
       const token = localStorage.getItem("token");
       const res = await axios.get(
-        "https://student-management-system-backend-15ie.onrender.com",
+        "https://student-management-system-backend-15ie.onrender.com/api/courses",
         {
           headers: { Authorization: `Bearer ${token}` },
         },
