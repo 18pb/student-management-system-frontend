@@ -13,7 +13,7 @@ export default function Login() {
     setError("");
     try {
       const response = await axios.post(
-        "http://localhost:5001/api/auth/login",
+        "https://student-management-system-backend-15ie.onrender.com/api/auth/login",
         { email, password },
       );
       const { token, user } = response.data;

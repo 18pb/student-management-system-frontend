@@ -13,9 +13,12 @@ export default function AdminDashboard() {
   const fetchCourses = async () => {
     try {
       const token = localStorage.getItem("token");
-      const res = await axios.get("http://localhost:5001/api/courses", {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const res = await axios.get(
+        "https://student-management-system-backend-15ie.onrender.com",
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        },
+      );
       setCourses(res.data);
     } catch (err) {
       console.error(err);
@@ -31,7 +34,7 @@ export default function AdminDashboard() {
     try {
       const token = localStorage.getItem("token");
       await axios.post(
-        "http://localhost:5001/api/courses",
+        "https://student-management-system-backend-15ie.onrender.com/api/courses",
         { title, code, credits: Number(credits) },
         { headers: { Authorization: `Bearer ${token}` } },
       );
@@ -47,9 +50,12 @@ export default function AdminDashboard() {
   const handleDelete = async (id) => {
     try {
       const token = localStorage.getItem("token");
-      await axios.delete(`http://localhost:5001/api/courses/${id}`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      await axios.delete(
+        `https://student-management-system-backend-15ie.onrender.com/api/courses/${id}`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        },
+      );
       fetchCourses();
     } catch (err) {
       console.error(err);
