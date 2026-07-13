@@ -15,12 +15,12 @@ export default function StudentDashboard() {
     const fetchStudentData = async () => {
       try {
         const resCourses = await axios.get(
-          "[https://student-management-system-backend-15ie.onrender.com/api/courses](https://student-management-system-backend-15ie.onrender.com/api/courses)",
+          "https://student-management-system-backend-15ie.onrender.com/api/courses",
           config,
         );
         setCourses(resCourses.data);
         const resProfile = await axios.get(
-          "[https://student-management-system-backend-15ie.onrender.com/api/students/profile](https://student-management-system-backend-15ie.onrender.com/api/students/profile)",
+          "https://student-management-system-backend-15ie.onrender.com/api/students/profile",
           config,
         );
         setProfile(resProfile.data);
@@ -33,7 +33,6 @@ export default function StudentDashboard() {
 
   return (
     <div className="min-h-screen bg-slate-50 text-slate-800">
-      {/* Top Menu Bar */}
       <nav className="bg-white border-b border-slate-200 px-8 py-4 flex justify-between items-center shadow-sm">
         <h1 className="text-xl font-bold text-slate-900">
           🎓 Student Terminal
@@ -88,7 +87,7 @@ export default function StudentDashboard() {
                 </p>
               ) : (
                 <div className="space-y-3">
-                  {profile.academicPerformance.map((record, idx) => (
+                  {(profile.academicPerformance || []).map((record, idx) => (
                     <div
                       key={idx}
                       className="flex justify-between items-center p-3.5 bg-slate-50 rounded-xl border border-slate-200/60"
@@ -150,7 +149,7 @@ export default function StudentDashboard() {
               Read-only global systemic catalog sync
             </p>
             <div className="space-y-3 max-h-[500px] overflow-y-auto pr-1">
-              {courses.map((course) => (
+              {(courses || []).map((course) => (
                 <div
                   key={course._id}
                   className="p-4 bg-slate-50 rounded-xl border border-slate-200/60 hover:border-slate-300 transition-colors"

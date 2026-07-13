@@ -24,12 +24,12 @@ export default function AdminDashboard() {
   const fetchData = async () => {
     try {
       const resCourses = await axios.get(
-        "[https://student-management-system-backend-15ie.onrender.com/api/courses](https://student-management-system-backend-15ie.onrender.com/api/courses)",
+        "https://student-management-system-backend-15ie.onrender.com/api/courses",
         config,
       );
       setCourses(resCourses.data);
       const resStudents = await axios.get(
-        "[https://student-management-system-backend-15ie.onrender.com/api/students](https://student-management-system-backend-15ie.onrender.com/api/students)",
+        "https://student-management-system-backend-15ie.onrender.com/api/students",
         config,
       );
       setStudents(resStudents.data);
@@ -46,7 +46,7 @@ export default function AdminDashboard() {
     e.preventDefault();
     try {
       await axios.post(
-        "[https://student-management-system-backend-15ie.onrender.com/api/courses](https://student-management-system-backend-15ie.onrender.com/api/courses)",
+        "https://student-management-system-backend-15ie.onrender.com/api/courses",
         { title, code, credits: Number(credits) },
         config,
       );
@@ -188,7 +188,7 @@ export default function AdminDashboard() {
                   className="w-full px-3 py-2 border border-slate-200 rounded-lg bg-white outline-none"
                 >
                   <option value="">-- Choose Student --</option>
-                  {students.map((s) => (
+                  {(students || []).map((s) => (
                     <option key={s._id} value={s._id}>
                       {s.user?.name} ({s.studentId})
                     </option>
@@ -206,7 +206,7 @@ export default function AdminDashboard() {
                   className="w-full px-3 py-2 border border-slate-200 rounded-lg bg-white outline-none"
                 >
                   <option value="">-- Choose Course --</option>
-                  {courses.map((c) => (
+                  {(courses || []).map((c) => (
                     <option key={c._id} value={c._id}>
                       {c.code} - {c.title}
                     </option>
@@ -267,10 +267,10 @@ export default function AdminDashboard() {
           {/* Mini Course Catalog Lookup */}
           <div className="bg-white p-6 rounded-xl border border-slate-200 shadow-sm max-h-[420px] overflow-y-auto">
             <h2 className="text-lg font-bold mb-4 text-slate-900">
-              Course Catalog ({courses.length})
+              Course Catalog ({courses?.length || 0})
             </h2>
             <div className="space-y-2">
-              {courses.map((course) => (
+              {(courses || []).map((course) => (
                 <div
                   key={course._id}
                   className="flex justify-between items-center p-2.5 bg-slate-50 rounded-lg border border-slate-100"
@@ -313,7 +313,7 @@ export default function AdminDashboard() {
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-100 text-sm">
-                {students.map((student) => (
+                {(students || []).map((student) => (
                   <tr
                     key={student._id}
                     className="hover:bg-slate-50 transition-colors"
@@ -332,23 +332,25 @@ export default function AdminDashboard() {
                         </span>
                       ) : (
                         <div className="flex flex-wrap gap-2">
-                          {student.academicPerformance.map((record, i) => (
-                            <span
-                              key={i}
-                              className="text-xs px-2.5 py-1 rounded border bg-white shadow-2xs font-medium"
-                            >
-                              <strong className="text-blue-600">
-                                {record.course?.code || "Deleted"}
-                              </strong>
-                              : {record.grade} ({record.score}%) -
+                          {(student.academicPerformance || []).map(
+                            (record, i) => (
                               <span
-                                className={`ml-1 font-bold ${record.status === "Completed" ? "text-green-600" : record.status === "Failed" ? "text-red-600" : "text-amber-500"}`}
+                                key={i}
+                                className="text-xs px-2.5 py-1 rounded border bg-white shadow-2xs font-medium"
                               >
-                                {" "}
-                                {record.status}
+                                <strong className="text-blue-600">
+                                  {record.course?.code || "Deleted"}
+                                </strong>
+                                : {record.grade} ({record.score}%) -
+                                <span
+                                  className={`ml-1 font-bold ${record.status === "Completed" ? "text-green-600" : record.status === "Failed" ? "text-red-600" : "text-amber-500"}`}
+                                >
+                                  {" "}
+                                  {record.status}
+                                </span>
                               </span>
-                            </span>
-                          ))}
+                            ),
+                          )}
                         </div>
                       )}
                     </td>
